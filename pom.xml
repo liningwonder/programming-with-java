@@ -20,6 +20,12 @@
         <module>programming-java-common</module>
         <module>programming-java-http</module>
         <module>programming-java-file</module>
+        <module>dao-with-redis</module>
+        <module>dao-with-mongodb</module>
+        <module>dao-spring-redis</module>
+        <module>dao-spring-boot-redis</module>
+        <module>dao-spring-mongodb</module>
+        <module>dao-spring-boot-mongodb</module>
     </modules>
 
     <properties>
