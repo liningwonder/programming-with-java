@@ -1,0 +1,5 @@
+[15:09:30:760] [INFO] - com.lining.common.config.PropUtil.main(PropUtil.java:95) - 1234
+[15:09:30:776] [INFO] - com.lining.common.config.PropUtil.main(PropUtil.java:99) - com.mysql.jdbc.Driver
+[15:10:21:677] [INFO] - com.lining.common.config.PropUtil.main(PropUtil.java:95) - 1234
+[15:10:21:693] [INFO] - com.lining.common.config.PropUtil.main(PropUtil.java:99) - com.mysql.jdbc.Driver
+[15:10:21:693] [INFO] - com.lining.common.config.PropUtil.main(PropUtil.java:101) - D:\1aaaaCode\programming-with-java\config\config.properties
