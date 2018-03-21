@@ -92,7 +92,7 @@ public class PropUtil {
     public static boolean getBoolean(Properties props, String key, boolean defaultValue) {
         boolean value = defaultValue;
         if (props.containsKey(key)) {
-            value = Boolean.parseBoolean(props.getProperty(key));
+            value = Boolean.valueOf(props.getProperty(key));
         }
         return value;
     }
@@ -102,10 +102,14 @@ public class PropUtil {
         String password = getString(properties, "jdbc.password", "root");
         LOG.info(password);
 
+
         Properties properties1 = getProperties("config.properties");
         String driver = getString(properties1, "jdbc.driver", "driver");
         LOG.info(driver);
 
         LOG.info(getFilePath("config.properties"));
+
+        LOG.info(String.valueOf(getInt(properties1, "jdbc.test.port", 0) + 1));
+        LOG.info(String.valueOf(getBoolean(properties1, "jdbc.test.open", false)));
     }
 }
