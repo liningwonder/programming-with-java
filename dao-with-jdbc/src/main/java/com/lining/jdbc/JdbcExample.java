@@ -30,6 +30,11 @@ public class JdbcExample {
         PASSWORD = "root";
     }
 
+    /**
+     * 此时的一个Connection对应一个事务,不同的DAO获取的Connection不同
+     * 每次获得connection都需要浪费cpu资源和内存资源，是很浪费资源的
+     * @return
+     */
     public static Connection getConnection() {
         Connection connection = null;
         try {

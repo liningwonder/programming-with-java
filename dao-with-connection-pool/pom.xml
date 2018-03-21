@@ -11,5 +11,13 @@
 
     <artifactId>dao-with-connection-pool</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.lining</groupId>
+            <artifactId>programming-java-common</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
