@@ -1,10 +1,13 @@
-package com.lining.kafka.advance;
+package com.lining.kafka.offset;
 
+import org.apache.kafka.clients.consumer.CommitFailedException;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,22 +15,23 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * description: 同一个消费者群组里面运行多个消费者，每个消费者运行在自己的线程上
- * 把消费者的逻辑封装在对象中，实现Runable接口，在外层使用ExecutorService开启多个
- * 线程处理
+ * description:
  * date 2018-03-27
  *
  * @author lining1
  * @version 1.0.0
  */
-public class ConsumerLoop implements Runnable {
+public class ConsumerSyncOffset implements Runnable {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ConsumerSyncOffset.class);
+
     private final KafkaConsumer<String, String> consumer;//消费者对象
     private final List<String> topics;//主题列表
     private final int id;//消费者群组id
 
-    public ConsumerLoop(int id,
-                        String groupId,
-                        List<String> topics) {
+    public ConsumerSyncOffset(int id,
+                              String groupId,
+                              List<String> topics) {
         this.id = id;
         this.topics = topics;
         Properties props = new Properties();
@@ -52,6 +56,14 @@ public class ConsumerLoop implements Runnable {
                     data.put("key", record.key());//键
                     data.put("value", record.value());//值
                     System.out.println(this.id + ": " + data);
+                    //阻塞方式手动提交偏移量
+                    try {
+                        //此方法会一直尝试提交偏移量，阻塞方式会降低效率
+                        consumer.commitSync();
+                    } catch (CommitFailedException e) {
+                        e.printStackTrace();
+                        LOG.error("commit failed", e);
+                    }
                 }
             }
         } catch (WakeupException e) {

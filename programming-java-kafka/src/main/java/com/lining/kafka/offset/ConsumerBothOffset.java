@@ -1,4 +1,4 @@
-package com.lining.kafka.advance;
+package com.lining.kafka.offset;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -20,14 +20,14 @@ import java.util.Properties;
  * @author lining1
  * @version 1.0.0
  */
-public class ConsumerLoop implements Runnable {
+public class ConsumerBothOffset implements Runnable {
     private final KafkaConsumer<String, String> consumer;//消费者对象
     private final List<String> topics;//主题列表
     private final int id;//消费者群组id
 
-    public ConsumerLoop(int id,
-                        String groupId,
-                        List<String> topics) {
+    public ConsumerBothOffset(int id,
+                              String groupId,
+                              List<String> topics) {
         this.id = id;
         this.topics = topics;
         Properties props = new Properties();
@@ -53,11 +53,16 @@ public class ConsumerLoop implements Runnable {
                     data.put("value", record.value());//值
                     System.out.println(this.id + ": " + data);
                 }
+                consumer.commitAsync();
             }
         } catch (WakeupException e) {
             // ignore for shutdown
         } finally {
-            consumer.close();
+            try {
+                consumer.commitSync();
+            } finally {
+                consumer.close();
+            }
         }
     }
 
