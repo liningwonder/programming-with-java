@@ -1,6 +1,8 @@
 package com.lining.kafka.base;
 
 import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,5 +41,17 @@ public class KafkaConsumer {
     public void subscribeMessage(List<String> topics) {
         LOG.info("KafkaConsumer subscribe topics : {}", topics.toString());
         consumer.subscribe(topics);
+        try {
+            while (true) {
+                ConsumerRecords<String, String> records = consumer.poll(1000);//1000为超时时间
+                for (ConsumerRecord<String, String> record : records) {
+                    System.out.println(record.offset() + ": " + record.value());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            consumer.close();
+        }
     }
 }
