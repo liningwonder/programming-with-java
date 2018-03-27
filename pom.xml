@@ -26,6 +26,8 @@
         <module>dao-spring-boot-redis</module>
         <module>dao-spring-mongodb</module>
         <module>dao-spring-boot-mongodb</module>
+        <module>programming-java-kafka</module>
+        <module>programming-java-concurrent</module>
     </modules>
 
     <properties>

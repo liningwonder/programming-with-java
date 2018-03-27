@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Properties;
 
 /**
@@ -34,6 +36,17 @@ public class DruidHelper {
             LOG.error(e.getMessage());
         }
         return dataSource;
+    }
+
+    public Connection getConnection(DataSource dataSource) {
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            LOG.error(e.getMessage());
+        }
+        return connection;
     }
 
 }
